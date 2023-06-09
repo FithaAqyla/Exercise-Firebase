@@ -1,3 +1,4 @@
+import 'package:cloud/controller/auth_controller.dart';
 import 'package:cloud/view/contact.dart';
 import 'package:cloud/view/register.dart';
 import 'package:flutter/material.dart';
@@ -10,25 +11,24 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _formf = GlobalKey<FormState>();
-  final namee = TextEditingController();
-  final email = TextEditingController();
-  final pwd = TextEditingController();
-  bool _togglePass = true;
-
+  final authCtr = AuthController();
+  final _formkey = GlobalKey<FormState>();
+  bool tooglepass = true;
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
             child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Form(
-                  key: _formf,
+                  key: _formkey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage("assets/image/login.jpg"),
                         radius: 100,
                       ),
@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                         children: [
                           TextFormField(
                             keyboardType: TextInputType.name,
-                            controller: namee,
+                            //controller: namee,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.person_outline_outlined),
                               labelText: 'Name',
@@ -86,33 +86,21 @@ class _LoginState extends State<Login> {
                             height: 10.0,
                           ),
                           TextFormField(
-                            controller: pwd,
-                            obscureText: _togglePass,
-                            keyboardType: TextInputType.visiblePassword,
+                            //keyboardType: TextInputType.visiblePassword,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock_outlined),
                               labelText: 'Password',
                               hintText: 'Enter your password',
                               border: OutlineInputBorder(),
-                              suffix: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    _togglePass = !_togglePass;
-                                  });
-                                },
-                                child: Icon(_togglePass
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                              ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Password cannot be empty';
-                              } else if (pwd.text.length < 6) {
-                                "Password must be at least 6 characters";
-                              }
-                              return null;
-                            },
+                            // validator: (value) {
+                            //   if (value == null || value.isEmpty) {
+                            //     return 'Password cannot be empty';
+                            //   } else if (pwd.text.length < 6) {
+                            //     "Password must be at least 6 characters";
+                            //   }
+                            //   return null;
+                            // },
                             // onSaved: (value) {
                             //   name = value;
                             // },
@@ -133,9 +121,7 @@ class _LoginState extends State<Login> {
                             backgroundColor: Colors.blue,
                           ),
                           onPressed: () {
-                            if (_formf.currentState!.validate()) {
-                              //
-
+                            if (_formkey.currentState!.validate()) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
