@@ -19,7 +19,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Container(
             child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -93,17 +92,6 @@ class _LoginState extends State<Login> {
                               hintText: 'Enter your password',
                               border: OutlineInputBorder(),
                             ),
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return 'Password cannot be empty';
-                            //   } else if (pwd.text.length < 6) {
-                            //     "Password must be at least 6 characters";
-                            //   }
-                            //   return null;
-                            // },
-                            // onSaved: (value) {
-                            //   name = value;
-                            // },
                           ),
                           const SizedBox(
                             height: 10.0,
