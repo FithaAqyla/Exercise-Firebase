@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "92526412438",
+    "project_id": "cloudprojectpam",
+    "storage_bucket": "cloudprojectpam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92526412438:android:4c04974f5d77b8045678b7",
+        "android_client_info": {
+          "package_name": "com.example.cloud"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNDhNoS9wO_3luSctMTn1bx19Wq-CEx8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
