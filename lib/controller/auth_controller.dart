@@ -48,16 +48,17 @@ class AuthController {
     } catch (e) {
       print('Error registering user: $e');
     }
-    UserModel? getCurrentUser() {
-      final User? user = auth.currentUser;
-      if (user != null) {
-        return UserModel.fromFirebaseUser(user);
-      }
-      return null;
-    }
+  }
 
-    Future<void> signOut() async {
-      await auth.signOut();
+  UserModel? getCurrentUser() {
+    final User? user = auth.currentUser;
+    if (user != null) {
+      return UserModel.fromFirebaseUser(user);
     }
+    return null;
+  }
+
+  Future<void> signOut() async {
+    await auth.signOut();
   }
 }
