@@ -45,7 +45,8 @@ class ContactController {
       address: contactModel.address,
     );
 
-    await contactCollection.doc(contactModel.id).update(contactModel.toMap());
+    await contactCollection.doc(contactModel.id).update(cmModel.toMap());
+    await getContact();
     // final DocumentSnapshot documentSnapshot =
     //     await contactCollection.doc(docId).get();
     // if (!documentSnapshot.exists) {
