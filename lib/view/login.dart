@@ -1,4 +1,5 @@
 import 'package:cloud/controller/auth_controller.dart';
+import 'package:cloud/model/user_model.dart';
 import 'package:cloud/view/contact.dart';
 import 'package:cloud/view/register.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +64,6 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           TextFormField(
-                            keyboardType: TextInputType.name,
-                            //controller: namee,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.person_outline_outlined),
                               labelText: 'Name',
@@ -72,14 +71,17 @@ class _LoginState extends State<Login> {
                               border: OutlineInputBorder(),
                             ),
                             validator: (value) {
+                              bool valid = RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value!);
+
                               if (value == null || value.isEmpty) {
                                 return 'Enter your name!';
                               }
-                              return null;
                             },
-                          ),
-                          const SizedBox(
-                            height: 10.0,
+                            onChanged: (value) {
+                              email = value;
+                            },
                           ),
                           const SizedBox(
                             height: 10.0,
@@ -87,11 +89,20 @@ class _LoginState extends State<Login> {
                           TextFormField(
                             //keyboardType: TextInputType.visiblePassword,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock_outlined),
-                              labelText: 'Password',
-                              hintText: 'Enter your password',
-                              border: OutlineInputBorder(),
-                            ),
+                                prefixIcon: Icon(Icons.lock_outlined),
+                                labelText: 'Password',
+                                hintText: 'Enter your password',
+                                border: OutlineInputBorder(),
+                                suffix: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      tooglepass = !tooglepass;
+                                    });
+                                  },
+                                  child: Icon(tooglepass
+                                      ? Icons.visibility_off
+                                      : Icons.visibility_off),
+                                )),
                           ),
                           const SizedBox(
                             height: 10.0,
@@ -108,12 +119,35 @@ class _LoginState extends State<Login> {
                                 borderRadius: BorderRadius.circular(50)),
                             backgroundColor: Colors.blue,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formkey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Contact()));
+                              UserModel? loginUser =
+                                  await authCtr.signInWithEmailAndPassword(
+                                      email!, password!);
+                              if (loginUser != null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Login Berhasil'),
+                                        content: const Text(
+                                            'anda telah berhasil melakukan login'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Contact()));
+                                              print(loginUser.email);
+                                            },
+                                            child: const Text('ok'),
+                                          )
+                                        ],
+                                      );
+                                    });
+                              }
                             }
                           },
                           child: Text(
