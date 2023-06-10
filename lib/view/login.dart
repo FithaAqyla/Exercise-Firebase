@@ -66,8 +66,8 @@ class _LoginState extends State<Login> {
                           TextFormField(
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.person_outline_outlined),
-                              labelText: 'Name',
-                              hintText: 'Enter your name',
+                              labelText: 'Email',
+                              hintText: 'Enter your email',
                               border: OutlineInputBorder(),
                             ),
                             validator: (value) {
@@ -103,6 +103,14 @@ class _LoginState extends State<Login> {
                                       ? Icons.visibility_off
                                       : Icons.visibility_off),
                                 )),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter your password!';
+                              }
+                            },
+                            onChanged: (value) {
+                              password = value;
+                            },
                           ),
                           const SizedBox(
                             height: 10.0,
